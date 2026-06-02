@@ -196,6 +196,62 @@
   .btn-submit:hover{opacity:.9}
   .btn-submit:disabled{opacity:.6;cursor:default}
   .form-error{margin-top:12px;text-align:center;font-size:14px;color:var(--red)}
+
+  /* ---------- Loader "Cadastrando seu interesse" ---------- */
+  .loader{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:34px 20px;text-align:center}
+  .loader[hidden]{display:none}
+  .loader-stage{width:260px;height:195px;position:relative;overflow:hidden;border-radius:18px;border:1px solid var(--border);box-shadow:0 20px 50px -30px rgba(0,0,0,.4)}
+  .loader-text{margin-top:24px;font-size:16px;font-weight:600;color:var(--foreground)}
+  .loader-text .ldots i{font-style:normal;opacity:.2;animation:ldot 1.2s infinite}
+  .loader-text .ldots i:nth-child(2){animation-delay:.2s}
+  .loader-text .ldots i:nth-child(3){animation-delay:.4s}
+  @keyframes ldot{0%,100%{opacity:.2}50%{opacity:1}}
+  .loader-bar{margin-top:16px;width:220px;max-width:80%;height:4px;border-radius:999px;background:var(--border);overflow:hidden}
+  .loader-bar span{display:block;height:100%;width:0;background:var(--red);border-radius:999px;animation:loaderbar 5s linear forwards}
+  @keyframes loaderbar{from{width:0}to{width:100%}}
+
+  /* cena (boneco no supino) escalada — escopada em #loader */
+  #loader .gym-scene{position:absolute;top:0;left:0;width:800px;height:600px;transform:scale(.325);transform-origin:top left;background:#15151b}
+  #loader .man{position:absolute;top:40%;left:25%;width:55%;height:45%;z-index:3}
+  #loader .man .legs{position:absolute;width:20%;height:64%;bottom:4%}
+  #loader .man .legs .leg{position:absolute;width:20%;height:100%;border-top-left-radius:30px;border-top-right-radius:30px}
+  #loader .man .legs .leg::after{content:"";background:#53313e;position:absolute;width:100%;height:5%;bottom:0}
+  #loader .man .legs .leg::before{content:"";background:#53313e;position:absolute;width:50%;height:5%;bottom:3px;left:-12%;border-radius:50%}
+  #loader .man .legs .one{background:#ffaf72;left:20%;z-index:3}
+  #loader .man .legs .two{background:#f78d5c;left:10%;z-index:2;transform:rotate(10deg)}
+  #loader .man .legs .thy{z-index:2;position:absolute;height:12%;width:120%;left:24%;background:#649740}
+  #loader .man .legs .thy::after{content:"";position:absolute;border-top-left-radius:40%;border-bottom-left-radius:40%;top:-70%;height:240%;width:25%;right:-20%;background-color:#649740}
+  #loader .man .main-parts{position:absolute;left:33%;width:40%;height:30%;top:15%}
+  #loader .man .main-parts .upper{position:absolute;height:30%;width:48%;bottom:36%;background:#e75a46;z-index:1;transform:rotate(-5deg)}
+  #loader .man .main-parts .upper .above{position:absolute;background:#e75a46;width:150%;height:331%;border-radius:50%;right:-104%;top:-92%}
+  #loader .man .main-parts .lower{position:absolute;height:40%;width:100%;bottom:0;background:#cf4444;z-index:2}
+  #loader .man .main-parts .lower::after{content:"";position:absolute;height:201%;width:56%;right:0;top:-99%;border-radius:100%;background:#cf4444}
+  #loader .man .hand{position:absolute;right:28%;height:40%;width:9%;border-radius:20px;background:#ffaf72;z-index:5;top:12%;animation:animate-hand 2s infinite}
+  #loader .man .weight{position:absolute;height:30%;width:18%;border-radius:50%;border:4px solid #0b0b0b;left:57%;top:-10%;background:#EF0A36;z-index:10;animation:animate-hand 2s infinite}
+  #loader .man .weight:after{content:"";background-color:#b00026;position:absolute;width:60%;height:60%;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+  #loader .man .weight:before{content:"";background-color:#fff;position:absolute;width:20%;height:20%;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1}
+  @keyframes animate-hand{50%{transform:translateY(-40px)}}
+  #loader .man .arm{position:absolute;right:28%;width:10%;height:10%;z-index:5;top:14.7%;background:#f78d5c;border-radius:30px 5px 5px 30px}
+  #loader .man .neck{position:absolute;left:73%;width:20%;height:12%;background:#f78d5c;top:32%;overflow:hidden}
+  #loader .man .neck .head{position:absolute;right:0;bottom:-8%;width:69%;height:166%;border-radius:50%;background:#ffaf72}
+  #loader .man .nose{width:10%;height:10%;position:absolute;right:5%;top:21%;display:flex;justify-content:space-evenly}
+  #loader .man .nose div{position:absolute;bottom:-24%;width:7px;height:10px;border-radius:50%;background:#ffaf72}
+  #loader .man .nose div:nth-child(1){left:10%}
+  #loader .man .nose div:nth-child(2){left:50%}
+  #loader .man .hairs{position:absolute;left:86%;height:20%;width:10%;top:23%}
+  #loader .man .hairs .lower{position:absolute;bottom:-3px;right:11px;width:70%;height:33%;background:#54303c;border-radius:4px;border-bottom-right-radius:20%}
+  #loader .man .hairs .lower::after{content:"";position:absolute;width:24%;height:40%;border-radius:50%;background:#ffaf72}
+  #loader .man .hairs .upper{position:absolute;right:-10%;bottom:0;height:80%;width:40%}
+  #loader .man .hairs .upper div:nth-child(1){position:absolute;width:100%;height:40%;background:#54303c;border-radius:50%}
+  #loader .man .hairs .upper div:nth-child(2){position:absolute;top:30%;width:100%;height:40%;background:#54303c;border-radius:50%}
+  #loader .man .hairs .upper div:nth-child(3){position:absolute;top:60%;width:100%;height:40%;background:#54303c;border-radius:50%}
+  #loader .bench-container{position:absolute;top:60%;left:40%;width:45%;height:25%;z-index:2}
+  #loader .bench-container .left{position:absolute;top:10%;left:0;background:#476199;width:5%;height:90%}
+  #loader .bench-container .left::after{content:"";position:absolute;width:300%;height:10%;left:-100%;bottom:0;border-top:4px solid #4a8197;background:#476199}
+  #loader .bench-container .right{z-index:-1;position:absolute;top:-100%;right:5%;background:#476199;width:5%;height:200%}
+  #loader .bench-container .right::after{content:"";position:absolute;width:400%;height:5%;left:-150%;bottom:0;border-top:4px solid #4a8197;background:#476199}
+  #loader .seat{position:absolute;width:100%;background:#4e9993;height:10%;border-radius:15px 15px 0 0}
+  #loader .rod1{position:absolute;top:70%;height:15%;width:40%;right:5%;z-index:1}
   .microcopy{margin-top:16px;text-align:center;color:var(--muted-foreground);font-size:13px}
   .success{display:none;flex-direction:column;align-items:center;text-align:center;padding:48px 20px}
   .success.show{display:flex}
@@ -851,9 +907,9 @@
 <!-- ============ FORM ============ -->
 <section class="block" id="lista">
   <div class="wrap form-wrap">
-    <span class="eyebrow red reveal">Lista de espera</span>
-    <h2 class="reveal" style="margin-top:16px">O sistema que está fazendo isso <b>pode fazer pela sua academia.</b></h2>
-    <p class="lead reveal" style="margin-left:auto;margin-right:auto">Entre para a lista. Quando abrirmos, você é o primeiro a saber.</p>
+    <span class="eyebrow red reveal">Demonstração</span>
+    <h2 class="reveal" style="margin-top:16px">Veja o OctaGym <b>operando a sua academia.</b></h2>
+    <p class="lead reveal" style="margin-left:auto;margin-right:auto">Deixe seus dados que nosso time de relacionamento entra em contato em breve para te mostrar, na prática, como a operação funciona.</p>
 
     <form id="form" class="reveal" novalidate>
       <div class="f-row">
@@ -888,15 +944,50 @@
           </select>
         </div>
       </div>
-      <button type="submit" class="btn-submit">Garantir minha vaga</button>
+      <button type="submit" class="btn-submit">Quero uma demonstração</button>
       <p class="form-error" id="formError" hidden>Não foi possível enviar agora. Tente novamente em instantes.</p>
-      <p class="microcopy">Sem spam. Só entramos em contato quando as vagas abrirem.</p>
+      <p class="microcopy">Sem compromisso. Nosso time de relacionamento entra em contato em breve.</p>
     </form>
+
+    <div id="loader" class="loader" hidden>
+      <div class="loader-stage">
+        <div class="gym-scene">
+          <div class="bench-container">
+            <div class="seat"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
+          <div class="man">
+            <div class="legs">
+              <div class="leg one"></div>
+              <div class="leg two"></div>
+              <div class="thy"></div>
+            </div>
+            <div class="main-parts">
+              <div class="lower"></div>
+              <div class="upper"><div class="above"></div></div>
+            </div>
+            <div class="neck"><div class="head"></div></div>
+            <div class="arm"></div>
+            <div class="nose"><div></div><div></div></div>
+            <div class="hairs">
+              <div class="lower"></div>
+              <div class="upper"><div></div><div></div><div></div></div>
+            </div>
+            <div class="hand"></div>
+            <div class="weight"></div>
+          </div>
+          <div class="rod1"></div>
+        </div>
+      </div>
+      <p class="loader-text">Cadastrando seu interesse<span class="ldots"><i>.</i><i>.</i><i>.</i></span></p>
+      <div class="loader-bar"><span></span></div>
+    </div>
 
     <div id="success" class="success">
       <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
-      <h3>Você está na lista. Quando movermos, você vai saber primeiro.</h3>
-      <p>Fique de olho no WhatsApp e no e-mail.</p>
+      <h3>Recebemos o seu interesse!</h3>
+      <p>Nosso time de relacionamento vai entrar em contato em breve para agendar a sua demonstração. Fique de olho no WhatsApp e no e-mail.</p>
     </div>
   </div>
 </section>
@@ -1042,15 +1133,12 @@
   var SB_URL = (window.OCTA_SB_URL || 'https://ldrrqsrblsjbiqzkojoc.supabase.co');
   var SB_KEY = (window.OCTA_SB_KEY || 'sb_publishable_95LVlkAmEZ_driVP286_Iw_l2ZGtRP4');
   var form = document.getElementById('form');
-  var submitBtn = form.querySelector('.btn-submit');
   var formError = document.getElementById('formError');
+  var loaderEl = document.getElementById('loader');
   form.addEventListener('submit', function(e){
     e.preventDefault();
     if(formError) formError.hidden = true;
     if(!form.checkValidity()){ form.reportValidity(); return; }
-    var original = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
     var payload = {
       nome: form.nome.value.trim(),
       telefone: form.telefone.value.trim(),
@@ -1059,7 +1147,11 @@
       unidades: form.unidades.value,
       origem: 'lp-ironberg'
     };
-    fetch(SB_URL + '/rest/v1/waitlist', {
+    // mostra o loader "Cadastrando seu interesse" por no minimo 5s
+    form.style.display = 'none';
+    if(loaderEl){ loaderEl.hidden = false; void loaderEl.offsetWidth; }
+    var minDelay = new Promise(function(res){ setTimeout(res, 5000); });
+    var req = fetch(SB_URL + '/rest/v1/waitlist', {
       method: 'POST',
       headers: {
         'apikey': SB_KEY,
@@ -1070,13 +1162,15 @@
       body: JSON.stringify(payload)
     }).then(function(r){
       if(!r.ok) return r.text().then(function(t){ throw new Error('HTTP ' + r.status + ' ' + t); });
-      form.style.display = 'none';
+    });
+    Promise.all([req, minDelay]).then(function(){
+      if(loaderEl) loaderEl.hidden = true;
       var s = document.getElementById('success');
       s.classList.add('show');
       s.scrollIntoView({behavior:'smooth', block:'center'});
     }).catch(function(err){
-      submitBtn.disabled = false;
-      submitBtn.textContent = original;
+      if(loaderEl) loaderEl.hidden = true;
+      form.style.display = '';
       if(formError){ formError.hidden = false; }
       console.error('Falha ao enviar para o Supabase:', err);
     });
