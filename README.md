@@ -22,3 +22,10 @@ A chave **não** é commitada. Para rodar o efeito de satélite:
 
 ## Deploy
 Estático: GitHub Pages, Vercel ou Netlify. `index.html` na raiz.
+
+## Deploy na Vercel
+1. Importe o repositório na Vercel (framework: **Other**).
+2. Em **Settings → Environment Variables**, crie:
+   `OCTA_MAPS_KEY = sua_chave_do_google_maps`
+3. O build (`node build.js`) gera `config.js` automaticamente com a chave (que não fica no git).
+4. No Google Cloud, **restrinja a chave pelo domínio da Vercel** (referrer) e habilite só a *Maps JavaScript API*.
