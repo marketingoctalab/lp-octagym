@@ -2,7 +2,7 @@
 <html lang="pt-BR" style="color-scheme:light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>OctaGym × Ironberg Brasília · Você está dentro do sistema agora</title>
 <meta name="description" content="Esta página foi criada, automatizada e está sendo operada pelo OctaGym. O case da maior academia do mundo, acontecendo em tempo real.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
     --maxw:1280px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{
     background:var(--background);color:var(--foreground);
     font-family:'Geist',system-ui,-apple-system,sans-serif;
@@ -169,7 +169,7 @@
   @media(min-width:680px){.f-row{grid-template-columns:1fr 1fr}}
   .field{display:flex;flex-direction:column;gap:8px}
   .field label{font-size:14px;font-weight:500}
-  .field input,.field select{width:100%;height:48px;padding:0 15px;font-size:15px;font-family:inherit;background:var(--background);color:var(--foreground);border:1px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;-webkit-appearance:none}
+  .field input,.field select{width:100%;height:48px;padding:0 15px;font-size:16px;font-family:inherit;background:var(--background);color:var(--foreground);border:1px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;-webkit-appearance:none}
   .field input::placeholder{color:var(--muted-2)}
   .field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(34,34,34,.12)}
   .field input:user-invalid{border-color:var(--red);box-shadow:0 0 0 3px rgba(239,10,54,.14)}
@@ -177,6 +177,8 @@
   select.filled{color:var(--foreground)}
   .btn-submit{width:100%;height:50px;margin-top:8px;background:var(--primary);color:var(--primary-foreground);border:none;border-radius:var(--radius);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .2s}
   .btn-submit:hover{opacity:.9}
+  .btn-submit:disabled{opacity:.6;cursor:default}
+  .form-error{margin-top:12px;text-align:center;font-size:14px;color:var(--red)}
   .microcopy{margin-top:16px;text-align:center;color:var(--muted-foreground);font-size:13px}
   .success{display:none;flex-direction:column;align-items:center;text-align:center;padding:48px 20px}
   .success.show{display:flex}
@@ -868,6 +870,7 @@
         </div>
       </div>
       <button type="submit" class="btn-submit">Garantir minha vaga</button>
+      <p class="form-error" id="formError" hidden>Não foi possível enviar agora. Tente novamente em instantes.</p>
       <p class="microcopy">Sem spam. Só entramos em contato quando as vagas abrirem.</p>
     </form>
 
@@ -1016,15 +1019,48 @@
     s.addEventListener('change', function(){ if(s.value) s.classList.add('filled'); });
   });
 
-  /* Form submit */
+  /* Form submit -> Supabase */
+  var SB_URL = (window.OCTA_SB_URL || 'https://ldrrqsrblsjbiqzkojoc.supabase.co');
+  var SB_KEY = (window.OCTA_SB_KEY || 'sb_publishable_95LVlkAmEZ_driVP286_Iw_l2ZGtRP4');
   var form = document.getElementById('form');
+  var submitBtn = form.querySelector('.btn-submit');
+  var formError = document.getElementById('formError');
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    if(formError) formError.hidden = true;
     if(!form.checkValidity()){ form.reportValidity(); return; }
-    form.style.display = 'none';
-    var s = document.getElementById('success');
-    s.classList.add('show');
-    s.scrollIntoView({behavior:'smooth', block:'center'});
+    var original = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+    var payload = {
+      nome: form.nome.value.trim(),
+      telefone: form.telefone.value.trim(),
+      email: form.email.value.trim(),
+      negocio: form.negocio.value,
+      unidades: form.unidades.value,
+      origem: 'lp-ironberg'
+    };
+    fetch(SB_URL + '/rest/v1/waitlist', {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok) return r.text().then(function(t){ throw new Error('HTTP ' + r.status + ' ' + t); });
+      form.style.display = 'none';
+      var s = document.getElementById('success');
+      s.classList.add('show');
+      s.scrollIntoView({behavior:'smooth', block:'center'});
+    }).catch(function(err){
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+      if(formError){ formError.hidden = false; }
+      console.error('Falha ao enviar para o Supabase:', err);
+    });
   });
 
   /* ---- Google Maps satellite loop (lazy load) ---- */
